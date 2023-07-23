@@ -5,13 +5,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ env('APP_NAME', 'Lara-Poll') }}</title>
+    <title inertia>{{ config('app.name', 'Lara-Poll') }}</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <!-- Scripts -->
     @routes
     @vite(['resources/js/app.js', 'resources/css/app.css'])
     @inertiaHead
 </head>
 
-<body class="bg-white dark:bg-gray-900 text-black dark:text-white">
+<body class="font-sans antialiased bg-white dark:bg-gray-900 text-black dark:text-white">
     @inertia
 </body>
 
