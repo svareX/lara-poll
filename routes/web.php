@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PollController;
+use App\Http\Controllers\PollOptionUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return inertia('Booking/Index');
+    return inertia('Poll/Index');
 });
+
+Route::resource('poll', PollController::class);
+Route::post('poll/{poll}/poll-option/{pollOption}', [PollOptionUserController::class, 'store'])->name('poll.vote');
