@@ -4,9 +4,6 @@ import '../css/app.css';
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
-import MainLayout from '@/Layouts/MainLayout.vue'
-
-const appName = import.meta.env.VITE_APP_NAME || 'Lara-Poll';
 
 createInertiaApp({
     resolve: name => {
@@ -19,4 +16,4 @@ createInertiaApp({
           .use(ZiggyVue)
           .mount(el)
       },
-    })
+})

@@ -45,7 +45,9 @@ class PollController extends Controller
     public function show(Poll $poll)
     {
         return inertia('Poll/Show', [
-            'poll' => $poll->load('options'),
+            'poll' => $poll->load('options')->load(['options' => function ($query) {
+                $query->withCount('users');
+            }]),
         ]);
     }
 

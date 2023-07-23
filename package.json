@@ -20,6 +20,8 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
-        "@inertiajs/vue3": "^1.0.9"
+        "@inertiajs/vue3": "^1.0.9",
+        "chart.js": "^4.3.0",
+        "vue-chartjs": "^5.2.0"
     }
 }
