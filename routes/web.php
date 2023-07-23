@@ -19,5 +19,5 @@ Route::get('/', function () {
     return inertia('Poll/Index');
 });
 
-Route::resource('poll', PollController::class);
-Route::post('poll/{poll}/poll-option/{pollOption}', [PollOptionUserController::class, 'store'])->name('poll.vote');
+Route::post('polls/{poll}/poll-option/{pollOption}', [PollOptionUserController::class, 'store'])->name('poll.vote');
+Route::resource('polls', PollController::class);

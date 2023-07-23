@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>{{ env('APP_NAME', 'Lara-Poll') }}</title>
-
-    @vite('resources/js/app.js')
+    @routes
+    @vite(['resources/js/app.js', 'resources/css/app.css'])
     @inertiaHead
 </head>
 
-<body>
+<body class="bg-white dark:bg-gray-900 text-black dark:text-white">
     @inertia
 </body>
 
