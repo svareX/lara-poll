@@ -13,7 +13,9 @@ class PollController extends Controller
     public function index()
     {
         return inertia('Poll/Index', [
-            'polls' => Poll::latest()->take(10)->get(),
+            'polls' => Poll::latest()->with('options')->with(['options' => function ($query) {
+                $query->withCount('users');
+            }])->take(10)->get(),
         ]);
     }
 
