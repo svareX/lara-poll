@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Lara-BnB</title>
+    <title>{{ env('APP_NAME', 'Lara-Poll') }}</title>
 
     @vite('resources/js/app.js')
     @inertiaHead
