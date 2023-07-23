@@ -8,7 +8,9 @@
         <div class="w-full text-center my-10">
             <div v-for="poll in props.polls" class="flex flex-col gap-4">
                 <div>
-                    <p><b>{{ poll.title }}</b> #{{ poll.id }}</p>
+                    <Link :href="route('polls.show', poll.id)">
+                        <b>{{ poll.title }}</b> #{{ poll.id }}
+                    </Link>
                     <div v-for="option in poll.options">
                         <p class="mx-4">
                             {{ option.title }} <b>{{ option.users_count }}</b> hlasů
@@ -17,7 +19,9 @@
                     </div>
                 </div>
                 <div class="flex justify-center">
-                    <PieChart :poll="poll"/>
+                    <div class="h-64 w-64">
+                        <PieChart :poll="poll"/>
+                    </div>
                 </div>
             </div>
         </div>

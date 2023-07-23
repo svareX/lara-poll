@@ -1,11 +1,9 @@
 <template>
-    <div class="h-64 w-64">
         <Pie
           id="my-chart-id"
           :options="chartOptions"
           :data="chartData"
         />
-    </div>
 </template>
 
 <script setup>
