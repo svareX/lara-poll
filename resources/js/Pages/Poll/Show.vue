@@ -21,4 +21,8 @@ import { Head } from '@inertiajs/vue3'
 defineProps({
     poll: Object,
 })
+Echo.private('my-channel')
+    .listen('Voted', (e) => {
+        console.log(e);
+    });
 </script>

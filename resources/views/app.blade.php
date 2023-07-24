@@ -19,6 +19,8 @@
 
 <body class="font-sans antialiased bg-white dark:bg-gray-900 text-black dark:text-white">
     @inertia
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </body>
 
 </html>

@@ -26,7 +26,6 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
 Route::post('/polls/{poll}/poll-option/{pollOption}', [PollOptionUserController::class, 'store'])->name('polls.vote');
 Route::resource('/polls', PollController::class);
 

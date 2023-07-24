@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Voted;
 use App\Models\Poll;
 use App\Models\PollOption;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class PollOptionUserController extends Controller
         $request->user()->votes()->attach($pollOption, [
             'poll_id' => $poll->id,
         ]);
+        Voted::dispatch($request->user()->id . ' voted for $pollOption->id.');
         return redirect()->route('polls.index')->with('success', 'Vote cast.');
     }
 }
