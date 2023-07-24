@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Poll;
+use App\Models\PollOptionUser;
 use Illuminate\Http\Request;
 
 class PollController extends Controller
@@ -45,9 +46,10 @@ class PollController extends Controller
     public function show(Poll $poll)
     {
         return inertia('Poll/Show', [
-            'poll' => $poll->load('options')->load(['options' => function ($query) {
+            'poll' => $poll->load('options')->load('options.users')->load(['options' => function ($query) {
                 $query->withCount('users');
             }]),
+            'history' => PollOptionUser::where('poll_id', $poll->id)->with('user')->with('option')->orderBy('created_at', 'desc')->get(),
         ]);
     }
 

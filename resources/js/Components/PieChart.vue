@@ -23,23 +23,20 @@ export default {
     data(props) {
       return {
         chartData: {
-          labels: props.poll.options.map(option => option.title),
+        //   labels: props.poll.options.map(option => option.title),
           datasets: [{
             data: props.poll.options.map(option => option.users_count),
-            backgroundColor: [
-                'rgb(255, 175, 204)',
-                'rgb(162, 210, 255)',
-                ],
+            backgroundColor: props.poll.options.map(option => option.color),
             }]
         },
         chartOptions: {
           responsive: true,
-          plugins: {
-            title: {
-                display: true,
-                text: props.poll.title,
-            }
-          }
+        //   plugins: {
+        //     title: {
+        //         display: true,
+        //         text: props.poll.title,
+        //     }
+        //   }
         }
       }
     }

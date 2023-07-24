@@ -5,26 +5,27 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Polls</h2>
         </template>
 
-        <div class="w-full text-center my-10">
-            <div v-for="poll in props.polls" class="flex flex-col gap-4">
-                <div>
-                    <Link :href="route('polls.show', poll.id)">
-                        <b>{{ poll.title }}</b> #{{ poll.id }}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mx-6 md:mx-12 my-6 md:my-12">
+            <div class="flex flex-col md:flex-row justify-center mb-8" v-for="poll in props.polls">
+                <div class="flex flex-col items-center md:mr-10 md:mt-10">
+                    <Link :href="route('polls.show', poll.id)" class="md:mb-4">
+                        <b>{{ poll.title }}</b>
                     </Link>
-                    <div v-for="option in poll.options">
-                        <p class="mx-4">
-                            {{ option.title }} <b>{{ option.users_count }}</b> hlasů
+                    <div v-for="option in poll.options" class="flex justify-start">
+                            <p class="mr-2">
+                                {{ option.title }} <b> - {{ option.users_count }}</b> hlasů
+                            </p>
                             <Link :href="route('polls.vote', [poll.id, option.id])" method="post">Hlasovat</Link>
-                        </p>
                     </div>
                 </div>
-                <div class="flex justify-center">
-                    <div class="h-64 w-64">
+                <div class="flex flex-col">
+                    <div class="ml-10 h-60 w-60">
                         <PieChart :poll="poll"/>
                     </div>
                 </div>
             </div>
         </div>
+
     </AuthenticatedLayout>
 </template>
 
