@@ -1,6 +1,6 @@
 <template>
         <Pie
-          id="my-chart-id"
+          id="PieChart"
           :options="chartOptions"
           :data="chartData"
         />
@@ -33,7 +33,13 @@ export default {
             }]
         },
         chartOptions: {
-          responsive: true
+          responsive: true,
+          plugins: {
+            title: {
+                display: true,
+                text: props.poll.title,
+            }
+          }
         }
       }
     }

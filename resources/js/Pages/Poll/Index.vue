@@ -30,9 +30,20 @@
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Link, Head } from '@inertiajs/vue3'
+import { Link, Head, router } from '@inertiajs/vue3'
 import PieChart from '@/Components/PieChart.vue'
 const props = defineProps({
     polls: Object,
 })
+
+Echo.private('my-channel')
+    .listen('Voted', (e) => {
+        router.get(
+            route('polls.index', { preserveState: true, preserveScroll: true })
+        )
+        // TODO: FIND A WAY TO UPDATE DATA WITHOUT REFRESHING THE ENTIRE PAGE
+        // console.log(e.message.map(message => message.users_count));
+        // PieChart.chartData.datasets[0].data = e.message.map(message => message.users_count);
+
+    });
 </script>

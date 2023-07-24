@@ -17,7 +17,7 @@ class PollOptionUserController extends Controller
         $request->user()->votes()->attach($pollOption, [
             'poll_id' => $poll->id,
         ]);
-        Voted::dispatch($request->user()->id . ' voted for $pollOption->id.');
+        Voted::dispatch($poll->options()->withCount('users')->get()->toArray());
         return redirect()->route('polls.index')->with('success', 'Vote cast.');
     }
 }
