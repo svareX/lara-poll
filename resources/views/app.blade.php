@@ -21,6 +21,7 @@
     @inertia
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/@chenfengyuan/vue-countdown@2"></script>
 </body>
 
 </html>
