@@ -10,6 +10,7 @@
 const props = defineProps({
     poll: Object,
 })
+console.log(props.poll.options.map(option => option.users_count).every(item => item === 0));
 </script>
 
 <script>
@@ -25,18 +26,18 @@ export default {
         chartData: {
         //   labels: props.poll.options.map(option => option.title),
           datasets: [{
-            data: props.poll.options.map(option => option.users_count),
+            data: props.poll.options.map(option => option.users_count).every(item => item === 0) ? props.poll.options.map(option => option.users_count+1) : props.poll.options.map(option => option.users_count),
             backgroundColor: props.poll.options.map(option => option.color),
             }]
         },
         chartOptions: {
           responsive: true,
-        //   plugins: {
-        //     title: {
-        //         display: true,
-        //         text: props.poll.title,
-        //     }
-        //   }
+          plugins: {
+            title: {
+                display: true,
+                text: props.poll.title,
+            }
+          }
         }
       }
     }

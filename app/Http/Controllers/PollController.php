@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Poll;
+use App\Models\PollOption;
 use App\Models\PollOptionUser;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PollController extends Controller
 {
@@ -33,11 +36,23 @@ class PollController extends Controller
      */
     public function store(Request $request)
     {
-        Poll::make([
-            'title' => $request->title,
-            'ends_at' => $request->ends_at,
-        ])->user()->associate($request->user())->save();
-        return redirect()->route('polls.index')->with('success', 'Poll created.');
+        try {
+            Poll::make([
+                'title' => $request->title,
+                'ends_at' => $request->ends_at,
+            ])->user()->associate($request->user())->save();
+            $poll_id = Poll::latest()->first()->id;
+            for ($i = 1; $i <= $request->option_count; $i++) {
+                PollOption::make([
+                    'title' => $request->input('option_title' . $i),
+                    'color' => $request->input('option_color' . $i),
+                ])->poll()->associate($poll_id)->save();
+            }
+            return redirect()->route('polls.index')->with('success', 'Poll created.');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->route('polls.index')->with('error', 'Poll not created.');
+        }
     }
 
     /**

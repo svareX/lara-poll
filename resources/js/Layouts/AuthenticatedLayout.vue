@@ -1,13 +1,22 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+
+const page = usePage()
+const flashSuccess = computed(
+  () => page.props.flash.success,
+)
+const flashError = computed(
+  () => page.props.flash.error,
+)
+const hidden = ref(false);
 </script>
 
 <template>
@@ -38,7 +47,7 @@ const showingNavigationDropdown = ref(false);
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
-                                <Dropdown align="right" width="48">
+                                <Dropdown align="right" width="32">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
                                             <button
@@ -65,6 +74,7 @@ const showingNavigationDropdown = ref(false);
 
                                     <template #content>
                                         <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+                                        <DropdownLink :href="route('polls.create')"> Create a poll </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </DropdownLink>
@@ -128,6 +138,7 @@ const showingNavigationDropdown = ref(false);
 
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('polls.create')"> Create a poll </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
                                 Log Out
                             </ResponsiveNavLink>
@@ -145,6 +156,15 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Content -->
             <main>
+                <div v-if="flashSuccess && !hidden" class="flex justify-between m-3 border rounded-md shadow-sm border-green-700 dark:border-green-800 bg-green-500 dark:bg-green-900 px-4 py-2">
+                    <span class="pt-0.5">flashSuccess</span>
+                    <button type="button" @click="hidden = true" class="border border-black dark:border-white rounded-md p-0.5 px-2.5">X</button>
+                </div>
+                <div v-if="flashError && !hidden" class="flex justify-between m-3 border rounded-md shadow-sm border-red-700 dark:border-red-800 bg-red-500 dark:bg-red-900 px-4 py-2">
+                    <span class="pt-0.5">flashError</span>
+                    <button type="button" @click="hidden = true" class="border border-black dark:border-white rounded-md p-0.5 px-2.5">X</button>
+                </div>
+
                 <slot />
             </main>
         </div>

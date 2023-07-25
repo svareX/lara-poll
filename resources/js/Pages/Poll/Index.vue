@@ -5,9 +5,9 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Polls</h2>
         </template>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mx-6 md:mx-12 my-6 md:my-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 mx-6 md:mx-12 my-6 md:my-12">
             <div class="flex flex-col md:flex-row justify-center mb-8" v-for="poll in props.polls">
-                <div class="flex flex-col items-center md:mr-10 md:mt-10">
+                <div class="flex flex-col items-center text:xs lg:text-base md:mt-10">
                     <Link :href="route('polls.show', poll.id)" class="md:mb-4">
                         <b>{{ poll.title }}</b>
                     </Link>
@@ -19,8 +19,10 @@
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="ml-10 h-60 w-60">
-                        <PieChart :poll="poll"/>
+                    <div class="flex justify-center">
+                        <div class="h-60 w-60">
+                            <PieChart :poll="poll"/>
+                        </div>
                     </div>
                 </div>
             </div>
