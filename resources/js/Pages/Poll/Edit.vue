@@ -72,6 +72,7 @@
                             v-model="form['option_color'+index]"
                             required
                             autofocus
+                            :placeholder="Math.random()<0.5 ? 'rgb(255, 255, 255)' : '#ffffff'"
                             :autocomplete="'option_color'+index"
                         />
                     </div>
@@ -104,25 +105,25 @@ const form = useForm({
     ends_at: props.poll.ends_at ?? now.toISOString().slice(0,16),
     option_count: props.poll.options_count ?? 2,
     option_title1: null,
-    option_color1: '#7e22ce',
+    option_color1: null,
     option_title2: null,
-    option_color2: '#7e22ce',
+    option_color2: null,
     option_title3: null,
-    option_color3: '#7e22ce',
+    option_color3: null,
     option_title4: null,
-    option_color4: '#7e22ce',
+    option_color4: null,
     option_title5: null,
-    option_color5: '#7e22ce',
+    option_color5: null,
     option_title6: null,
-    option_color6: '#7e22ce',
+    option_color6: null,
     option_title7: null,
-    option_color7: '#7e22ce',
+    option_color7: null,
     option_title8: null,
-    option_color8: '#7e22ce',
+    option_color8: null,
     option_title9: null,
-    option_color9: '#7e22ce',
+    option_color9: null,
     option_title10: null,
-    option_color10: '#7e22ce',
+    option_color10: null,
 });
 props.poll.options.forEach((option, index) => {
     form['option_title'+(index+1)] = option.title

@@ -2,7 +2,7 @@
     <Head :title="$page.props.auth.user.name + '\'s polls'"/>
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Polls</h2>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{{ $page.props.auth.user.name }}'s polls'</h2>
         </template>
 
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 mx-6 md:mx-12 my-6 md:my-12">
