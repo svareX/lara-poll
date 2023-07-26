@@ -73,8 +73,9 @@ const hidden = ref(false);
                                     </template>
 
                                     <template #content>
+                                        <DropdownLink :href="route('polls.create')"> New poll </DropdownLink>
+                                        <DropdownLink :href="route('users.polls.index', $page.props.auth.user.id)"> My polls </DropdownLink>
                                         <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-                                        <DropdownLink :href="route('polls.create')"> Create a poll </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </DropdownLink>
@@ -137,8 +138,9 @@ const hidden = ref(false);
                         </div>
 
                         <div class="mt-3 space-y-1">
+                            <ResponsiveNavLink :href="route('polls.create')"> New poll </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('users.polls.index', $page.props.auth.user.id)"> My polls </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('polls.create')"> Create a poll </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
                                 Log Out
                             </ResponsiveNavLink>

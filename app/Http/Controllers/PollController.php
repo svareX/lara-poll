@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Poll;
 use App\Models\PollOption;
 use App\Models\PollOptionUser;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -17,9 +18,9 @@ class PollController extends Controller
     public function index()
     {
         return inertia('Poll/Index', [
-            'polls' => Poll::latest()->with('options')->with(['options' => function ($query) {
+            'polls' => Poll::where('ends_at', '>', Carbon::now())->latest()->with('options')->with(['options' => function ($query) {
                 $query->withCount('users');
-            }])->take(10)->get(),
+            }])->paginate(6),
         ]);
     }
 
@@ -74,7 +75,7 @@ class PollController extends Controller
     public function edit(Poll $poll)
     {
         return inertia('Poll/Edit', [
-            'poll' => $poll->load('options'),
+            'poll' => $poll->load('options')->loadCount('options'),
         ]);
     }
 
@@ -87,6 +88,46 @@ class PollController extends Controller
             'title' => $request->title,
             'ends_at' => $request->ends_at,
         ]);
+        $counter = 1;
+        //poll options updated only data
+        if ($poll->options()->count() === $request->option_count) {
+            foreach ($poll->options as $option) {
+                $option->update([
+                    'title' => $request->input('option_title' . $counter),
+                    'color' => $request->input('option_color' . $counter),
+                ]);
+                $counter++;
+            }
+            //poll options updated data and some were deleted
+        } elseif ($poll->options()->count() > $request->option_count) {
+            $delete_count = $poll->options()->count() - $request->option_count;
+            $poll->options()->latest()->take($delete_count)->delete();
+            foreach ($poll->options as $option) {
+                $option->update([
+                    'title' => $request->input('option_title' . $counter),
+                    'color' => $request->input('option_color' . $counter),
+                ]);
+                $counter++;
+            }
+        }
+        //poll options updated data and some were added
+        else {
+            $add_count = $request->option_count - $poll->options()->count();
+            foreach ($poll->options as $option) {
+                $option->update([
+                    'title' => $request->input('option_title' . $counter),
+                    'color' => $request->input('option_color' . $counter),
+                ]);
+                $counter++;
+            }
+            for ($i = $counter; $i < ($counter + $add_count); $i++) {
+                PollOption::make([
+                    'title' => $request->input('option_title' . $i),
+                    'color' => $request->input('option_color' . $i),
+                ])->poll()->associate($poll->id)->save();
+            }
+        }
+
         return redirect()->route('polls.index')->with('success', 'Poll updated.');
     }
 

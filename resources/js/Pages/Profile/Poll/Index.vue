@@ -1,8 +1,8 @@
 <template>
-    <Head title="Ongoing polls"/>
+    <Head :title="$page.props.auth.user.name + '\'s polls'"/>
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Currently ongoing polls</h2>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Polls</h2>
         </template>
 
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 mx-6 md:mx-12 my-6 md:my-12">
@@ -19,6 +19,19 @@
                                         {{ option.title }} <b> - {{ option.users_count }}</b> hlasů
                                     </p>
                                     <Link :href="route('polls.vote', [poll.id, option.id])" method="post">Hlasovat</Link>
+                            </div>
+
+                            <div class="flex justify-row pt-4 gap-4 justify-between">
+                                <Link :href="route('polls.edit', poll.id)" method="get" as="button"
+                                class="p-2 rounded-md border shadow-sm border-gray-300 dark:border-gray-800 hover:border-gray-400 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800"
+                                >
+                                    Edit
+                                </Link>
+                                <Link :href="route('polls.destroy', poll.id)" method="delete" as="button"
+                                class="p-2 rounded-md border shadow-sm border-gray-300 dark:border-gray-800 hover:border-gray-400 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800"
+                                >
+                                    Delete
+                                </Link>
                             </div>
                         </div>
                         <div class="flex flex-col">
@@ -50,7 +63,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Link, Head, router } from '@inertiajs/vue3'
 import PieChart from '@/Components/PieChart.vue'
 import VueCountdown from '@chenfengyuan/vue-countdown';
-import Pagination from '@/Components/Pagination.vue'
+import Pagination from '@/Components/Pagination.vue';
 
 const props = defineProps({
     polls: Object,
@@ -70,3 +83,4 @@ Echo.private('my-channel')
 
     });
 </script>
+

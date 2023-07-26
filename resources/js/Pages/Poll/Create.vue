@@ -101,7 +101,7 @@ function submit() {
 
 
 const form = useForm({
-    title: 'test',
+    title: 'Poll title',
     ends_at: now.toISOString().slice(0,16),
     option_count: 2,
     option_title1: null,

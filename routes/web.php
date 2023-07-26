@@ -3,6 +3,7 @@
 use App\Http\Controllers\PollController;
 use App\Http\Controllers\PollOptionUserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserPollController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,6 +29,7 @@ Route::get('/', function () {
 });
 Route::post('/polls/{poll}/poll-option/{pollOption}', [PollOptionUserController::class, 'store'])->name('polls.vote');
 Route::resource('/polls', PollController::class);
+Route::resource('/users.polls', UserPollController::class)->only(['index']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
