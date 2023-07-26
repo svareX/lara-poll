@@ -49,7 +49,7 @@ class PollController extends Controller
                     'color' => $request->input('option_color' . $i),
                 ])->poll()->associate($poll_id)->save();
             }
-            return redirect()->route('polls.index')->with('success', 'Poll created.');
+            return redirect()->route('polls.index')->with('success', 'Poll\'' . $request->title . '\' updated.');
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->route('polls.index')->with('error', 'Poll not created.');
@@ -128,7 +128,7 @@ class PollController extends Controller
             }
         }
 
-        return redirect()->route('polls.index')->with('success', 'Poll updated.');
+        return redirect()->route('polls.index')->with('success', 'Poll \'' . $poll->title . '\' updated.');
     }
 
     /**
@@ -137,6 +137,6 @@ class PollController extends Controller
     public function destroy(Poll $poll)
     {
         $poll->delete();
-        return redirect()->route('polls.index')->with('success', 'Poll deleted.');
+        return redirect()->route('polls.index')->with('error', 'Poll \'' . $poll->title . '\' deleted.');
     }
 }

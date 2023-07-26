@@ -159,11 +159,11 @@ const hidden = ref(false);
             <!-- Page Content -->
             <main>
                 <div v-if="flashSuccess && !hidden" class="flex justify-between m-3 border rounded-md shadow-sm border-green-700 dark:border-green-800 bg-green-500 dark:bg-green-900 px-4 py-2">
-                    <span class="pt-0.5">flashSuccess</span>
+                    <span class="pt-0.5">{{ flashSuccess }}</span>
                     <button type="button" @click="hidden = true" class="border border-black dark:border-white rounded-md p-0.5 px-2.5">X</button>
                 </div>
                 <div v-if="flashError && !hidden" class="flex justify-between m-3 border rounded-md shadow-sm border-red-700 dark:border-red-800 bg-red-500 dark:bg-red-900 px-4 py-2">
-                    <span class="pt-0.5">flashError</span>
+                    <span class="pt-0.5">{{ flashError }}</span>
                     <button type="button" @click="hidden = true" class="border border-black dark:border-white rounded-md p-0.5 px-2.5">X</button>
                 </div>
 
