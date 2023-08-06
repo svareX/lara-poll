@@ -70,7 +70,7 @@ const props = defineProps({
 })
 
 const now = new Date();
-now.setMinutes(now.getMinutes());
+// now.setMinutes(now.getTimezoneOffset());
 
 Echo.private('my-channel')
     .listen('Voted', (e) => {

@@ -104,7 +104,7 @@ function submit() {
 
 const form = useForm({
     title: null,
-    ends_at: now.toISOString().slice(0,16),
+    ends_at: now.toISOString().slice(0, 16),
     option_count: 2,
     option_title1: null,
     option_color1: null,

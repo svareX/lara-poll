@@ -18,7 +18,7 @@ class PollController extends Controller
     public function index()
     {
         return inertia('Poll/Index', [
-            'polls' => Poll::where('ends_at', '>', Carbon::now())->latest()->with('options')->with(['options' => function ($query) {
+            'polls' => Poll::where('ends_at', '>', Carbon::now('UTC'))->latest()->with('options')->with(['options' => function ($query) {
                 $query->withCount('users');
             }])->paginate(6),
         ]);
@@ -40,7 +40,7 @@ class PollController extends Controller
         try {
             Poll::make([
                 'title' => $request->title,
-                'ends_at' => $request->ends_at,
+                'ends_at' => Carbon::createFromDate($request->ends_at)->tz('UTC')->toDateTimeString(),
             ])->user()->associate($request->user())->save();
             $poll_id = Poll::latest()->first()->id;
             for ($i = 1; $i <= $request->option_count; $i++) {
