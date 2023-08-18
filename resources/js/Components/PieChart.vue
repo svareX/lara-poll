@@ -10,7 +10,7 @@
 const props = defineProps({
     poll: Object,
 })
-console.log(props.poll.options.map(option => option.users_count).every(item => item === 0));
+// console.log(props.poll.options.map(option => option.users_count).every(item => item === 0));
 </script>
 
 <script>

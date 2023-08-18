@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Voted;
 use App\Models\Poll;
 use App\Models\PollOption;
 use App\Models\PollOptionUser;
+use App\Models\User;
+use App\Notifications\PollFinished;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Log;
 
 class PollController extends Controller

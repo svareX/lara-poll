@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\Voted;
 use App\Models\Poll;
 use App\Models\PollOption;
+use App\Notifications\PollFinished;
 use Illuminate\Http\Request;
 
 class PollOptionUserController extends Controller
@@ -17,7 +18,7 @@ class PollOptionUserController extends Controller
         $request->user()->votes()->attach($pollOption, [
             'poll_id' => $poll->id,
         ]);
-        Voted::dispatch($poll->options()->withCount('users')->get()->toArray());
+        $poll->user->notify(new PollFinished($poll));
         return redirect()->route('polls.index')->with('success', 'Vote cast.');
     }
 }

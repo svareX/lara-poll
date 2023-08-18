@@ -17,6 +17,16 @@ const flashError = computed(
   () => page.props.flash.error,
 )
 const hidden = ref(false);
+
+const notificationCount = ref(Math.min(page.props.auth.user.notificationCount, 9),
+)
+Echo.private('App.Models.User.' + page.props.auth.user.id)
+    .notification((notification) => {
+        console.log(notification.poll_id);
+        if (notificationCount.value < 9) {
+            notificationCount.value++;
+        };
+    });
 </script>
 
 <template>
@@ -45,6 +55,16 @@ const hidden = ref(false);
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
+                            <!-- Notifications -->
+                            <div class="text-gray-500 relative pr-2 py-2 text-lg">
+                                <Link :href="route('dashboard')">
+                                🔔
+                                <div v-if="notificationCount" class="absolute right-0 top-0 w-5 h-5 bg-red-700 dark:bg-red-400 text-white font-medium border border-white dark:border-gray-900 rounded-full text-xs text-center">
+                                    {{ notificationCount }}
+                                </div>
+                                </Link>
+                            </div>
+
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
                                 <Dropdown align="right" width="32">

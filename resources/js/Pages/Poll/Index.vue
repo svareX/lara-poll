@@ -59,14 +59,14 @@ const props = defineProps({
 const now = new Date();
 // now.setMinutes(now.getTimezoneOffset());
 
-Echo.private('my-channel')
-    .listen('Voted', (e) => {
-        router.get(
-            route('polls.index', { preserveState: true, preserveScroll: true })
-        )
-        // TODO: FIND A WAY TO UPDATE DATA WITHOUT REFRESHING THE ENTIRE PAGE
-        // console.log(e.message.map(message => message.users_count));
-        // PieChart.chartData.datasets[0].data = e.message.map(message => message.users_count);
+// Echo.private('my-channel')
+//     .listen('Voted', (e) => {
+//         router.get(
+//             route('polls.index', { preserveState: true, preserveScroll: true })
+//         )
+//         // TODO: FIND A WAY TO UPDATE DATA WITHOUT REFRESHING THE ENTIRE PAGE
+//         // console.log(e.message.map(message => message.users_count));
+//         // PieChart.chartData.datasets[0].data = e.message.map(message => message.users_count);
 
-    });
+//     });
 </script>

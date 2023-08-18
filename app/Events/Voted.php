@@ -32,6 +32,7 @@ class Voted implements ShouldBroadcast
     {
         return [
             new PrivateChannel('my-channel'),
+            new Channel('poll.1'),
         ];
     }
 }
