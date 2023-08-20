@@ -25,6 +25,8 @@
         "@chenfengyuan/vue-countdown": "^2.1.1",
         "@inertiajs/vue3": "^1.0.9",
         "chart.js": "^4.3.0",
-        "vue-chartjs": "^5.2.0"
+        "vue-chartjs": "^5.2.0",
+        "vue3-colorpicker": "^2.2.2",
+        "vueticol": "^1.0.15"
     }
 }

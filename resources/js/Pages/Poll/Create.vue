@@ -67,7 +67,7 @@
                     </div>
                     <div class="w-full md:w-1/5">
                         <InputLabel :for="'option_color'+index" :value="'Poll option color #'+index" />
-                        <TextInput
+                        <!-- <TextInput
                             :id="'option_color'+index"
                             type="text"
                             class="mt-1 block w-full"
@@ -76,7 +76,8 @@
                             autofocus
                             :placeholder="Math.random()<0.5 ? 'rgb(255, 255, 255)' : '#ffffff'"
                             :autocomplete="'option_color'+index"
-                        />
+                        /> -->
+                        <vueticol v-model="form['option_color'+index]" />
                     </div>
                 </div>
 
@@ -91,6 +92,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
+import { ref } from 'vue'
 import TextInput from '@/Components/TextInput.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import InputError from '@/Components/InputError.vue'
@@ -128,3 +130,4 @@ const form = useForm({
     option_color10: null,
 });
 </script>
+

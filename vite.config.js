@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import path from 'path';
 
 export default defineConfig({
+    base: '/vendor/',
     plugins: [
         laravel({
             input: ['resources/js/app.js', 'resources/css/app.css' ],
@@ -11,6 +12,9 @@ export default defineConfig({
         }),
         vue({
             template: {
+                compilerOptions: {
+                    isCustomElement: (tag) => ['md-linedivider'].includes(tag),
+                },
                 transformAssetUrls: {
                     base: null,
                     includeAbsolute: false,

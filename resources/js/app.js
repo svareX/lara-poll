@@ -4,6 +4,8 @@ import '../css/app.css';
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import Vueticol from 'vueticol';
+import 'vueticol/dist/vueticol.css';
 
 createInertiaApp({
     resolve: name => {
@@ -14,6 +16,7 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
           .use(plugin)
           .use(ZiggyVue)
+          .use(Vueticol)
           .mount(el)
       },
 })
