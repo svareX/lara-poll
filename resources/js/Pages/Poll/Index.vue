@@ -19,7 +19,9 @@
                                         <p class="mr-2">
                                             {{ option.title }} <b> - {{ option.users_count }}</b> hlasů
                                         </p>
-                                        <Link :href="route('polls.vote', [poll.id, option.id])" method="post">Hlasovat</Link>
+                                        <div v-if="1">
+                                            <Link :href="route('polls.vote', [poll.id, option.id])" method="post">Hlasovat</Link>
+                                        </div>
                                 </div>
                             </div>
                             <div class="flex flex-col">

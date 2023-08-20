@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Log;
 
 class PollController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Poll::class, 'poll');
+    }
     /**
      * Display a listing of the resource.
      */

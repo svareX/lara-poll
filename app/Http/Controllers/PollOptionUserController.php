@@ -15,6 +15,7 @@ class PollOptionUserController extends Controller
      */
     public function store(Request $request, Poll $poll, PollOption $pollOption)
     {
+        $this->authorize('create', [PollOption::class, $poll]);
         $request->user()->votes()->attach($pollOption, [
             'poll_id' => $poll->id,
         ]);
