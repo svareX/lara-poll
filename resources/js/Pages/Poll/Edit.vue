@@ -51,7 +51,7 @@
                 </div>
 
                 <div v-for="index in Number(form.option_count)" class="flex flex-col md:flex-row gap-4 mb-4">
-                    <div class="w-full md:w-4/5">
+                    <div class="w-full md:w-11/5">
                         <InputLabel :for="'option_title_'+index" :value="'Poll option title #'+index" />
                         <TextInput
                             :id="'option_title_'+index"
@@ -63,18 +63,8 @@
                             :autocomplete="'option_title_'+index"
                         />
                     </div>
-                    <div class="w-full md:w-1/5">
-                        <InputLabel :for="'option_color'+index" :value="'Poll option color #'+index" />
-                        <TextInput
-                            :id="'option_color'+index"
-                            type="text"
-                            class="mt-1 block w-full"
-                            v-model="form['option_color'+index]"
-                            required
-                            autofocus
-                            :placeholder="Math.random()<0.5 ? 'rgb(255, 255, 255)' : '#ffffff'"
-                            :autocomplete="'option_color'+index"
-                        />
+                    <div class="w-full md:w-1/12 flex flex-col justify-end">
+                        <vueticol v-model="form['option_color'+index]" :colors="colors"/>
                     </div>
                 </div>
 
@@ -99,6 +89,15 @@ now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
 const props = defineProps({
     poll: Object,
 })
+
+const colors = [
+    "#4f0000", "#960606", "#c90808", "#fa0000", "#eb4b4b", //red
+    "#ff6600", "#ff8c00", "#ffbf00", "#ffd966", "#ffe699", //orange
+    "#f2ff00", "#a6ff00", "#51ff00", "#14c72f", "#126e1f", //green
+    "#00eeff", "#00aeff", "#007bff", "#0037ff", "#3700ff", //blue
+    "#5505ab", "#a600ff", "#d000ff", "#fb00ff", "#ff00c8", //purple
+    "#5c3015", "#75340c", "#730202", "#ffffff", "#121211", //brown + white + black
+]
 
 const form = useForm({
     title: props.poll.title ?? 'Poll title',

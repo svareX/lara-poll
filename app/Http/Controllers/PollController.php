@@ -41,7 +41,6 @@ class PollController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->input());
         try {
             Poll::make([
                 'title' => $request->title,

@@ -20,7 +20,7 @@
     }
 
     .btn-primary {
-      @apply bg-violet-800 hover:bg-violet-700 active:bg-violet-700 focus:bg-violet-700 text-white font-medium p-2 rounded-md
+      @apply bg-violet-800 hover:bg-violet-700 active:bg-violet-700 focus:bg-violet-700 text-white font-medium p-4 rounded-md
     }
 
     .input-filter-l {
