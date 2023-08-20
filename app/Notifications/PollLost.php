@@ -4,12 +4,12 @@ namespace App\Notifications;
 
 use App\Models\Poll;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PollFinished extends Notification implements ShouldBroadcast
+class PollLost extends Notification
 {
     use Queueable;
 
@@ -18,6 +18,7 @@ class PollFinished extends Notification implements ShouldBroadcast
      */
     public function __construct(private Poll $poll)
     {
+        //
     }
 
     /**
@@ -50,7 +51,7 @@ class PollFinished extends Notification implements ShouldBroadcast
     {
         return [
             'poll_id' => $this->poll->id,
-            'state' => 'finished',
+            'state' => 'lost',
         ];
     }
 
@@ -61,7 +62,7 @@ class PollFinished extends Notification implements ShouldBroadcast
     {
         return new BroadcastMessage([
             'poll_id' => $this->poll->id,
-            'state' => 'finished',
+            'state' => 'lost',
         ]);
     }
 }

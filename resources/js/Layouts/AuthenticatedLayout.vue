@@ -22,10 +22,11 @@ const notificationCount = ref(Math.min(page.props.auth.user.notificationCount, 9
 )
 Echo.private('App.Models.User.' + page.props.auth.user.id)
     .notification((notification) => {
-        console.log(notification.poll_id);
         if (notificationCount.value < 9) {
             notificationCount.value++;
         };
+
+        console.log(notification.poll_id, notification.state);
     });
 </script>
 

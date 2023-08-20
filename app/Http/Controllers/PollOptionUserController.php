@@ -18,7 +18,7 @@ class PollOptionUserController extends Controller
         $request->user()->votes()->attach($pollOption, [
             'poll_id' => $poll->id,
         ]);
-        $poll->user->notify(new PollFinished($poll));
+        // $poll->user->notify(new PollFinished($poll));
         return redirect()->route('polls.index')->with('success', 'Vote cast.');
     }
 }

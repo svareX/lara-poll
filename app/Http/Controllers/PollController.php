@@ -44,7 +44,7 @@ class PollController extends Controller
         try {
             Poll::make([
                 'title' => $request->title,
-                'ends_at' => Carbon::createFromDate($request->ends_at)->tz('UTC')->toDateTimeString(),
+                'ends_at' => Carbon::createFromDate($request->ends_at)->toDateTimeString(),
             ])->user()->associate($request->user())->save();
             $poll_id = Poll::latest()->first()->id;
             for ($i = 1; $i <= $request->option_count; $i++) {
