@@ -22,7 +22,7 @@ class PollController extends Controller
     public function index()
     {
         return inertia('Poll/Index', [
-            'polls' => Poll::where('ends_at', '>', Carbon::now('UTC'))->latest()->with('options')->with(['options' => function ($query) {
+            'polls' => Poll::where('ends_at', '>', Carbon::now())->latest()->with('options')->with(['options' => function ($query) {
                 $query->withCount('users');
             }])->paginate(6),
         ]);
