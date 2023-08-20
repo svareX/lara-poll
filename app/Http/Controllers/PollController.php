@@ -132,7 +132,7 @@ class PollController extends Controller
             }
         }
 
-        return redirect()->route('polls.index')->with('success', 'Poll \'' . $poll->title . '\' updated.');
+        return redirect()->route('users.polls.index', $request->user()->id)->with('success', 'Poll \'' . $poll->title . '\' updated.');
     }
 
     /**

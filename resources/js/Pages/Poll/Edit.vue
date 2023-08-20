@@ -27,8 +27,7 @@
                             type="datetime-local"
                             class="mt-1 block w-full"
                             v-model="form.ends_at"
-                            required
-                            autofocus
+                            disabled
                             autocomplete="ends_at"/>
                         <InputError class="mt-2" :message="form.errors.ends_at"/>
                     </div>
@@ -42,8 +41,7 @@
                             v-model="form.option_count"
                             min="2"
                             max="10"
-                            required
-                            autofocus
+                            disabled
                             autocomplete="options_count"
                         />
                         <InputError class="mt-2" :message="form.errors.options_count" />
@@ -58,8 +56,7 @@
                             type="text"
                             class="mt-1 block w-full"
                             v-model="form['option_title'+index]"
-                            required
-                            autofocus
+                            disabled
                             :autocomplete="'option_title_'+index"
                         />
                     </div>
