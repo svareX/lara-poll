@@ -12,7 +12,9 @@
                         <p class="mr-2 text-lg">
                             {{ option.title }} <b> - {{ option.users_count }}</b> hlasů
                         </p>
-                        <Link :href="route('polls.vote', [poll.id, option.id])" method="post">Hlasovat</Link>
+                        <div v-if="canVote()">
+                            <Link :href="route('polls.vote', [poll.id, option.id])" method="post">Hlasovat</Link>
+                        </div>
                 </div>
             </div>
                 <div class="flex justify-center w-full xl:w-1/3">
@@ -48,9 +50,6 @@ import { Head, router, usePage, Link } from '@inertiajs/vue3'
 import { computed } from 'vue'
 
 const page = usePage()
-const user = computed(
-    () => page.props.auth,
-)
 const props = defineProps({
     poll: Object,
     history: Object,
@@ -65,4 +64,14 @@ Echo.private('my-channel')
         // PieChart.chartData.datasets[0].data = e.message.map(message => message.users_count);
 
     });
+
+function canVote() {
+    if (page.props.auth.user.id == props.poll.user_id) {
+        return false;
+    }
+    if (props.history.map(vote => vote.user_id).includes(page.props.auth.user.id)) {
+        return false;
+    }
+    return true;
+}
 </script>

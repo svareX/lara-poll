@@ -18,7 +18,6 @@
                                     <p class="mr-2">
                                         {{ option.title }} <b> - {{ option.users_count }}</b> hlasů
                                     </p>
-                                    <Link :href="route('polls.vote', [poll.id, option.id])" method="post">Hlasovat</Link>
                             </div>
 
                             <div class="flex justify-row pt-4 gap-4 justify-between">
@@ -64,6 +63,7 @@ import { Link, Head, router } from '@inertiajs/vue3'
 import PieChart from '@/Components/PieChart.vue'
 import VueCountdown from '@chenfengyuan/vue-countdown';
 import Pagination from '@/Components/Pagination.vue';
+
 
 const props = defineProps({
     polls: Object,

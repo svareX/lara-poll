@@ -19,7 +19,7 @@
                                         <p class="mr-2">
                                             {{ option.title }} <b> - {{ option.users_count }}</b> hlasů
                                         </p>
-                                        <div v-if="1">
+                                        <div v-if="canVote()">
                                             <Link :href="route('polls.vote', [poll.id, option.id])" method="post">Hlasovat</Link>
                                         </div>
                                 </div>
@@ -58,10 +58,11 @@
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Link, Head, router } from '@inertiajs/vue3'
+import { Link, Head } from '@inertiajs/vue3'
 import PieChart from '@/Components/PieChart.vue'
 import VueCountdown from '@chenfengyuan/vue-countdown';
 import Pagination from '@/Components/Pagination.vue'
+import { defineProps, computed } from 'vue'
 
 const props = defineProps({
     polls: Object,
@@ -80,4 +81,14 @@ const now = new Date();
 //         // PieChart.chartData.datasets[0].data = e.message.map(message => message.users_count);
 
 //     });
+
+function canVote() {
+    if (page.props.auth.user.id == props.poll.user_id) {
+        return false;
+    }
+    if (props.history.map(vote => vote.user_id).includes(page.props.auth.user.id)) {
+        return false;
+    }
+    return true;
+}
 </script>
