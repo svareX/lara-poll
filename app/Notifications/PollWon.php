@@ -51,6 +51,7 @@ class PollWon extends Notification
     {
         return [
             'poll_id' => $this->poll->id,
+            'poll_title' => $this->poll->title,
             'state' => 'won',
         ];
     }
@@ -62,6 +63,7 @@ class PollWon extends Notification
     {
         return new BroadcastMessage([
             'poll_id' => $this->poll->id,
+            'poll_title' => $this->poll->title,
             'state' => 'won',
         ]);
     }

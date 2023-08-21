@@ -14,6 +14,10 @@ const props = defineProps({
         type: String,
         default: 'py-1 bg-white dark:bg-gray-700',
     },
+    overflow: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const closeOnEscape = (e) => {
@@ -43,6 +47,10 @@ const alignmentClasses = computed(() => {
     }
 });
 
+const overflowClass = computed(() => {
+    return props.overflow ? 'overflow-y-auto max-h-60' : '';
+});
+
 const open = ref(false);
 </script>
 
@@ -66,7 +74,7 @@ const open = ref(false);
             <div
                 v-show="open"
                 class="absolute z-50 mt-2 rounded-md shadow-lg"
-                :class="[widthClass, alignmentClasses]"
+                :class="[widthClass, alignmentClasses, overflowClass]"
                 style="display: none"
                 @click="open = false"
             >

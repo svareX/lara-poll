@@ -37,6 +37,7 @@ class HandleInertiaRequests extends Middleware
                     'name' => $request->user()->name,
                     'email' => $request->user()->email,
                     'notificationCount' => $request->user()->unreadNotifications()->count(),
+                    'notifications' => $request->user()->notifications()->get(),
                 ] : null,
             ],
             'ziggy' => function () use ($request) {

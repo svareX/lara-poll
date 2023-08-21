@@ -6,6 +6,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link, usePage } from '@inertiajs/vue3';
+import axios from 'axios';
 
 const showingNavigationDropdown = ref(false);
 
@@ -25,9 +26,12 @@ Echo.private('App.Models.User.' + page.props.auth.user.id)
         if (notificationCount.value < 9) {
             notificationCount.value++;
         };
-
-        console.log(notification.poll_id, notification.state);
     });
+
+function markAsRead() {
+    axios.post(route('notifications.markAsRead'));
+    notificationCount.value = 0;
+}
 </script>
 
 <template>
@@ -56,14 +60,40 @@ Echo.private('App.Models.User.' + page.props.auth.user.id)
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <!-- Notifications -->
-                            <div class="text-gray-500 relative pr-2 py-2 text-lg">
-                                <Link :href="route('dashboard')">
-                                🔔
-                                <div v-if="notificationCount" class="absolute right-0 top-0 w-5 h-5 bg-red-700 dark:bg-red-400 text-white font-medium border border-white dark:border-gray-900 rounded-full text-xs text-center">
-                                    {{ notificationCount }}
-                                </div>
-                                </Link>
+                            <!-- Notifications Dropdown -->
+                            <div class="ml-3 relative ">
+                                <Dropdown align="right" width="48" overflow="true">
+                                    <template #trigger>
+                                        <span class="inline-flex rounded-md ">
+                                            <button
+                                                type="button" @click="markAsRead"
+                                                class="inline-flex items-center  px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
+                                            >
+                                            🔔
+                                            <div v-if="notificationCount" class="absolute right-0 top-0 w-5 h-5 bg-red-700 dark:bg-red-400 text-white font-medium border border-white dark:border-gray-900 rounded-full text-xs text-center">
+                                                {{ notificationCount }}
+                                            </div>
+                                            </button>
+                                        </span>
+                                    </template>
+
+                                    <template #content>
+                                        <div v-if="notificationCount">
+                                            <div v-for="notification in page.props.auth.user.notifications">
+                                                <DropdownLink :href="route('polls.show', notification.data.poll_id)">
+                                                    <span v-if="notification.data.state == 'won'">You have won the {{ notification.data.poll_title }} poll.</span>
+                                                    <span v-if="notification.data.state == 'lost'">You have lost the {{ notification.data.poll_title }} poll.</span>
+                                                    <span v-if="notification.data.state == 'finished'">The {{ notification.data.poll_title }} poll has finished.</span>
+                                                </DropdownLink>
+                                            </div>
+                                        </div>
+                                        <div v-else>
+                                            <DropdownLink :href="route('polls.index')">
+                                                No new notifications.
+                                            </DropdownLink>
+                                        </div>
+                                    </template>
+                                </Dropdown>
                             </div>
 
                             <!-- Settings Dropdown -->
@@ -143,10 +173,30 @@ Echo.private('App.Models.User.' + page.props.auth.user.id)
                     :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
                     class="sm:hidden"
                 >
-                    <div class="pt-2 pb-3 space-y-1">
+                    <div class="pt-2 pb-2 space-y-1">
                         <ResponsiveNavLink :href="route('polls.index')" :active="route().current('polls.index')">
                             Polls
                         </ResponsiveNavLink>
+                    </div>
+
+                    <!-- Responsive Notifications Options -->
+                    <div class="pb-1 border-t border-gray-200 dark:border-gray-600">
+                        <div class="mt-1 space-y-1">
+                            <div v-if="notificationCount">
+                                <div v-for="notification in page.props.auth.user.notifications">
+                                        <DropdownLink :href="route('polls.show', notification.data.poll_id)">
+                                            <span v-if="notification.data.state == 'won'">You have won the {{ notification.data.poll_title }} poll.</span>
+                                            <span v-if="notification.data.state == 'lost'">You have lost the {{ notification.data.poll_title }} poll.</span>
+                                            <span v-if="notification.data.state == 'finished'">The {{ notification.data.poll_title }} poll has finished.</span>
+                                        </DropdownLink>
+                                    </div>
+                                </div>
+                                <div v-else>
+                                    <DropdownLink :href="route('polls.index')">
+                                        No new notifications.
+                                    </DropdownLink>
+                                </div>
+                            </div>
                     </div>
 
                     <!-- Responsive Settings Options -->

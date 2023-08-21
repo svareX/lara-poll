@@ -50,6 +50,7 @@ class PollFinished extends Notification implements ShouldBroadcast
     {
         return [
             'poll_id' => $this->poll->id,
+            'poll_title' => $this->poll->title,
             'state' => 'finished',
         ];
     }
@@ -61,6 +62,7 @@ class PollFinished extends Notification implements ShouldBroadcast
     {
         return new BroadcastMessage([
             'poll_id' => $this->poll->id,
+            'poll_title' => $this->poll->title,
             'state' => 'finished',
         ]);
     }

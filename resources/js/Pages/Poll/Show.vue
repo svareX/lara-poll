@@ -58,10 +58,6 @@ Echo.private('my-channel')
         router.get(
             route('polls.show', props.poll.id, { preserveState: true, preserveScroll: true })
         )
-        // TODO: FIND A WAY TO UPDATE DATA WITHOUT REFRESHING THE ENTIRE PAGE
-        // console.log(e.message.map(message => message.users_count));
-        // PieChart.chartData.datasets[0].data = e.message.map(message => message.users_count);
-
     });
 function canVote() {
     if (page.props.auth.user.id == props.poll.user_id) {
