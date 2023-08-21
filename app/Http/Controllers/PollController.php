@@ -26,16 +26,11 @@ class PollController extends Controller
     public function index()
     {
         return inertia('Poll/Index', [
-            'polls' => Poll::with('options')->with(['options' => function ($query) {
+            'polls' => Poll::where('ends_at', '>', Carbon::now())->latest()->with('options')->with(['options' => function ($query) {
                 $query->withCount('users');
             }])->paginate(6),
             'history' => PollOptionUser::with('user')->with('option')->orderBy('created_at', 'desc')->get(),
         ]);
-        // return inertia('Poll/Index', [
-        //     'polls' => Poll::where('ends_at', '>', Carbon::now())->latest()->with('options')->with(['options' => function ($query) {
-        //         $query->withCount('users');
-        //     }])->paginate(6),
-        // ]);
     }
 
     /**
