@@ -19,7 +19,7 @@
                                         <p class="mr-2">
                                             {{ option.title }} <b> - {{ option.users_count }}</b> hlasů
                                         </p>
-                                        <div v-if="canVote()">
+                                        <div v-if="canVote(poll)">
                                             <Link :href="route('polls.vote', [poll.id, option.id])" method="post">Hlasovat</Link>
                                         </div>
                                 </div>
@@ -58,37 +58,26 @@
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Link, Head } from '@inertiajs/vue3'
+import { Link, Head, usePage } from '@inertiajs/vue3'
 import PieChart from '@/Components/PieChart.vue'
 import VueCountdown from '@chenfengyuan/vue-countdown';
 import Pagination from '@/Components/Pagination.vue'
-import { defineProps, computed } from 'vue'
+import { defineProps } from 'vue'
 
+const page = usePage()
 const props = defineProps({
     polls: Object,
+    history: Object,
 })
 
 const now = new Date();
 // now.setMinutes(now.getTimezoneOffset());
 
-// Echo.private('my-channel')
-//     .listen('Voted', (e) => {
-//         router.get(
-//             route('polls.index', { preserveState: true, preserveScroll: true })
-//         )
-//         // TODO: FIND A WAY TO UPDATE DATA WITHOUT REFRESHING THE ENTIRE PAGE
-//         // console.log(e.message.map(message => message.users_count));
-//         // PieChart.chartData.datasets[0].data = e.message.map(message => message.users_count);
-
-//     });
-
-function canVote() {
-    if (page.props.auth.user.id == props.poll.user_id) {
+function canVote(poll) {
+    console.log(props.history)
+    if (page.props.auth.user.id == poll.user_id) {
         return false;
     }
-    if (props.history.map(vote => vote.user_id).includes(page.props.auth.user.id)) {
-        return false;
-    }
-    return true;
+    return !poll.voted;
 }
 </script>

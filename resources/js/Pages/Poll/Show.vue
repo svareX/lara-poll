@@ -24,7 +24,7 @@
                         </div>
                     </div>
                 </div>
-            <div class="flex flex-col justify-center overflow-y-auto max-h-[45rem] text-center">
+            <div class="flex flex-col justify-center overflow-y-auto max-h-[45rem] text-start">
                 <p v-for="vote in history">
                     <span>
                         {{ new Date(vote.created_at).getDate() }}.{{ new Date(vote.created_at).getMonth() }}.{{ new Date(vote.created_at).getFullYear() }}
@@ -47,7 +47,6 @@
 import PieChart from '@/Components/PieChart.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, router, usePage, Link } from '@inertiajs/vue3'
-import { computed } from 'vue'
 
 const page = usePage()
 const props = defineProps({
@@ -64,7 +63,6 @@ Echo.private('my-channel')
         // PieChart.chartData.datasets[0].data = e.message.map(message => message.users_count);
 
     });
-
 function canVote() {
     if (page.props.auth.user.id == props.poll.user_id) {
         return false;
@@ -75,3 +73,4 @@ function canVote() {
     return true;
 }
 </script>
+

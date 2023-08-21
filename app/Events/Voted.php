@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Models\Poll;
+use App\Models\PollOption;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,13 +16,15 @@ class Voted implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
+    public Poll $poll;
+    public PollOption $option;
     /**
      * Create a new event instance.
      */
-    public function __construct($message)
+    public function __construct(Poll $poll, PollOption $option)
     {
-        $this->message = $message;
+        $this->poll = $poll;
+        $this->option = $option;
     }
 
     /**
@@ -31,8 +35,7 @@ class Voted implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('my-channel'),
-            new Channel('poll.1'),
+            new PrivateChannel('poll.' . $this->poll->id),
         ];
     }
 }

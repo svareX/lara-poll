@@ -20,6 +20,7 @@ class PollOptionUserController extends Controller
         $request->user()->votes()->attach($pollOption, [
             'poll_id' => $poll->id,
         ]);
+        event(new Voted($poll, $pollOption));
         //TODO: Maybe add a new event that notifies the creator of the poll if somebody voted in it.
         return redirect()->back()->with('success', 'Vote cast.');
     }

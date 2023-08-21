@@ -10,7 +10,11 @@
 const props = defineProps({
     poll: Object,
 })
-// console.log(props.poll.options.map(option => option.users_count).every(item => item === 0));
+Echo.private('poll.' + props.poll.id)
+    .listen('Voted', (e) => {
+        props.poll.options.map(option => option.id === e.option.id ? option.users_count++ : option.users_count);
+    }
+);
 </script>
 
 <script>
@@ -21,25 +25,23 @@ ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale)
 export default {
     name: 'PieChart',
     components: { Pie },
-    data(props) {
-      return {
-        chartData: {
-        //   labels: props.poll.options.map(option => option.title),
-          datasets: [{
-            data: props.poll.options.map(option => option.users_count).every(item => item === 0) ? props.poll.options.map(option => option.users_count+1) : props.poll.options.map(option => option.users_count),
-            backgroundColor: props.poll.options.map(option => option.color),
-            }]
-        },
-        chartOptions: {
-          responsive: true,
-          plugins: {
-            title: {
-                display: true,
-                text: props.poll.title,
-            }
+    computed: {
+      chartData() { return {
+        labels: this.poll.options.map(option => option.title),
+        datasets: [{
+          data: this.poll.options.map(option => option.users_count).every(item => item === 0) ? this.poll.options.map(option => option.users_count+1) : this.poll.options.map(option => option.users_count),
+          backgroundColor: this.poll.options.map(option => option.color),
+        }]
+      } },
+      chartOptions() { return {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: this.poll.title,
           }
         }
-      }
+      } }
     }
 }
 </script>
