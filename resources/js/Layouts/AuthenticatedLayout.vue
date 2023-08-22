@@ -19,16 +19,22 @@ const flashError = computed(
 )
 const hidden = ref(false);
 
-const notificationCount = ref(Math.min(page.props.auth.user.notificationCount, 9),
-)
+const notificationCount = ref(Math.min(page.props.auth.user.notificationCount, 9));
+
 Echo.private('App.Models.User.' + page.props.auth.user.id)
     .notification((notification) => {
-        if (notificationCount.value < 9) {
-            notificationCount.value++;
-        };
+        axios.post(route('notifications.unread')).then(response => {
+        page.props.auth.user.notifications = response.data;
+        notificationCount.value = Math.min(response.data.length, 9);
+        });
     });
-
 function markAsRead() {
+    if (notificationCount.value == 0)
+    {
+        axios.post(route('notifications.read')).then(response => {
+        page.props.auth.user.notifications = response.data;
+        });
+    }
     axios.post(route('notifications.markAsRead'));
     notificationCount.value = 0;
 }
@@ -78,20 +84,13 @@ function markAsRead() {
                                     </template>
 
                                     <template #content>
-                                        <div v-if="notificationCount">
-                                            <div v-for="notification in page.props.auth.user.notifications">
+                                        <div v-for="notification in page.props.auth.user.notifications">
                                                 <DropdownLink :href="route('polls.show', notification.data.poll_id)">
                                                     <span v-if="notification.data.state == 'won'">You have won the {{ notification.data.poll_title }} poll.</span>
                                                     <span v-if="notification.data.state == 'lost'">You have lost the {{ notification.data.poll_title }} poll.</span>
                                                     <span v-if="notification.data.state == 'finished'">The {{ notification.data.poll_title }} poll has finished.</span>
                                                 </DropdownLink>
                                             </div>
-                                        </div>
-                                        <div v-else>
-                                            <DropdownLink :href="route('polls.index')">
-                                                No new notifications.
-                                            </DropdownLink>
-                                        </div>
                                     </template>
                                 </Dropdown>
                             </div>

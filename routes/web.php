@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\GetReadNotificationsController;
+use App\Http\Controllers\GetUnreadNotificationsController;
 use App\Http\Controllers\MarkNotificationAsReadController;
 use App\Http\Controllers\PollController;
 use App\Http\Controllers\PollOptionUserController;
@@ -42,7 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::post('/notifications', MarkNotificationAsReadController::class)->name('notifications.markAsRead');
+    Route::post('/notifications/markasread', MarkNotificationAsReadController::class)->name('notifications.markAsRead');
+    Route::post('/notifications/unread', GetUnreadNotificationsController::class)->name('notifications.unread');
+    Route::post('/notifications/read', GetReadNotificationsController::class)->name('notifications.read');
 });
 
 require __DIR__ . '/auth.php';

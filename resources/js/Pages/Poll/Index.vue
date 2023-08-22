@@ -74,7 +74,6 @@ const now = new Date();
 // now.setMinutes(now.getTimezoneOffset());
 
 function canVote(poll) {
-    console.log(props.history)
     if (page.props.auth.user.id == poll.user_id) {
         return false;
     }
